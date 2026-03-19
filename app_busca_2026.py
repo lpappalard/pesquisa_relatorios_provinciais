@@ -155,12 +155,6 @@ else:
     # nenhum colecao selecionada -> resulta vazio
     df_filtrado = df_filtrado.iloc[0:0]
 
-st.write("Registros por coleção (após filtro):")
-st.write(df_filtrado["colecao"].value_counts())
-
-st.write("Linhas da AGRICULTURA sem texto_norm:")
-st.write(df_filtrado[df_filtrado["colecao"] == "agricultura"]["texto_norm"].isna().sum())
-
 # ---- anos ----
 anos = sorted(df_filtrado["ano"].dropna().unique())
 ano_min = int(min(anos)) if anos else 1850
