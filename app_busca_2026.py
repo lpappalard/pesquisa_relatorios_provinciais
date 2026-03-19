@@ -7,7 +7,7 @@ import re
 from collections import Counter
 
 st.set_page_config(layout="wide")
-st.title("Buscar termos nos relatórios presidenciais e da Agricultura (1850-1930)")
+st.title("Buscar termos nos relatórios presidenciais da Agricultura\n(1850-1930)")
 st.markdown("[baixar relatorios](https://drive.google.com/drive/folders/1UhyRxnprxZtQylzZJ0DW6L6XWwpt9LCg?usp=sharing)")
 
 STOPWORDS = set("""
