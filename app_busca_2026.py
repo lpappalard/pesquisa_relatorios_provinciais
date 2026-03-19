@@ -434,17 +434,16 @@ if not serie.empty:
     )
     st.dataframe(picos, width="stretch")
 
-# ---------- CORRELAÇÃO ---------- #
-st.subheader("Correlação entre coleções")
+# ---------- PICOS ---------- #
+st.subheader("Picos detectados")
 
-if not df_para_graficos.empty:
-    cross = (
-        df_para_graficos
-        .groupby(["ano", "colecao"])
-        .size()
-        .unstack(fill_value=0)
+if not serie.empty:
+    picos = (
+        serie.sort_values("ocorrencias", ascending=False)
+        .groupby("colecao")
+        .head(3)
     )
-    st.line_chart(cross)
+    st.dataframe(picos, width="stretch")
 
 st.subheader("-----------------------------------")
 
