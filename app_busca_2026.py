@@ -206,14 +206,21 @@ gov_escolhido = st.selectbox(
 )
 
 # ---------- BUSCA ---------- #
-consulta = st.text_input("Termos (separe por vírgula)", "")
-termos = [t.strip().lower() for t in consulta.split(",") if t.strip()]
+consulta = st.text_input("Termos (aspas para frases contínuas, vírgula para separar)", "")
+
+# Permite consultas como: "indigena guarani", arroz, "caminho de ferro"
+termos = []
+for token in re.findall(r'"([^"]+)"|\'([^\']+)\'|[^,]+', consulta):
+    # token é uma tupla por causa dos grupos alternados
+    termo = next((t for t in token if t), "").strip()
+    if termo:
+        termos.append(termo.lower())
 
 usar_aprox = st.checkbox("Incluir busca aproximada (OCR)", value=False)
 
 resultados_mult = {}
 for termo in termos:
-    mask = df_filtro["texto_norm"].str.contains(termo, na=False)
+    mask = df_filtro["texto_norm"].str.contains(re.escape(termo), na=False)
     resultados_mult[termo] = df_filtro[mask].copy()
 
 # ---------- RESULTADOS ---------- #
