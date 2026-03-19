@@ -8,6 +8,7 @@ from collections import Counter
 
 st.set_page_config(layout="wide")
 st.title("Busca nos Relatórios Provinciais / Presidenciais e da Agricultura")
+st.markdown("[baixar relatorios pesquisaveis com ocr](https://drive.google.com/drive/folders/1UhyRxnprxZtQylzZJ0DW6L6XWwpt9LCg?usp=sharing)")
 
 STOPWORDS = set("""
 de da do das dos a o os as que e em para por com se ao na no nos nas elle segundo alguns nesta
@@ -88,8 +89,6 @@ def carregar_base():
 
 with st.spinner("Carregando base (CSV) e normalizando texto..."):
     df = carregar_base()
-
-st.success("Base carregada.")
 
 # ---------- CARREGAR ---------- #
 df = carregar_base()
