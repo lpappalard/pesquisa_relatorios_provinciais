@@ -1,0 +1,13 @@
+__pycache__/
+.DS_Store
+.venv/
+venv/
+*.pyc
+_graficos/
+_relatorios_pdf_5099_fim/
+relatorios_ocr/
+*.log
+*.pdf
+*.xlsx
+*.csv
+*.geojson
