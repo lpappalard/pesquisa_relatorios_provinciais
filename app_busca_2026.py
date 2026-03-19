@@ -7,15 +7,48 @@ import re
 from collections import Counter
 
 st.set_page_config(layout="wide")
+
+pagina = st.sidebar.radio("Navegar", ["Buscar", "Sobre o projeto"])
+
+if pagina == "Sobre o projeto":
+    st.title("Sobre o projeto")
+    st.markdown("Este projeto reúne um conjunto de relatórios históricos dos presidentes da província do estado de São Paulo (1850–1930), bem como relatórios da Secretaria de Agricultura (1880–1930), organizados em uma base de dados pesquisável.")
+    st.markdown("A proposta é facilitar a consulta por termos, expressões e ocorrências nos relatórios oficiais, permitindo também comparar a frequência de citações ao longo do tempo e entre diferentes governos. A ferramenta possibilita identificar padrões discursivos, temas recorrentes e transformações históricas nos documentos, além de permitir a consulta individual de cada relatório, disponível para download.")
+    st.markdown("### Metodologia")
+    st.markdown("A base foi construída a partir da coleta de documentos digitalizados disponibilizados nos seguintes arquivos públicos:")
+    st.markdown("- Relatórios Presidenciais 1850 - 1930: https://digitalcollections.crl.edu/search?ln=en&p=Provincial+Presidential+Reports+S%C3%A3o+Paulo&f=&action_search=Search&rm=&sf=&so=d&rg=25&c=CRL+Digital+Collections&of=hb&fti=1&fti=1")
+    st.markdown("- Relatórios de Agricultura: biblioteca digital SEADE 1880 - 1930: https://bibliotecadigital.seade.gov.br/")
+    st.markdown("Os documentos foram processados por meio de reconhecimento óptico de caracteres (OCR), seguido de revisão e padronização textual, com o objetivo de viabilizar análises quantitativas e qualitativas.")
+    st.markdown("Além do tratamento textual, o trabalho envolveu a estruturação de uma base de dados relacional, na qual cada relatório foi associado a variáveis históricas e institucionais, incluindo:")
+    st.markdown("- governantes (presidentes da província / governadores do estado)")
+    st.markdown("- período administrativo")
+    st.markdown("- órgão produtor (ex.: Secretaria da Agricultura)")
+    st.markdown("- ano de publicação")
+    st.markdown("- coleção documental")
+    st.markdown("A base permite realizar análises por meio de:")
+    st.markdown("- busca por termos e expressões")
+    st.markdown("- análise de frequência de palavras")
+    st.markdown("- identificação de coocorrências entre termos")
+    st.markdown("- correlação entre termos pesquisados e períodos de governo")
+    st.markdown("Essa estrutura possibilita examinar os relatórios como uma série histórica permitindo investigar continuidades, rupturas e padrões de governo.")
+    st.markdown("Apesar dos esforços de revisão e padronização, a base foi construída a partir de documentos históricos digitalizados, podendo conter eventuais inconsistências decorrentes de erros de OCR ou das próprias fontes originais. Caso identifique qualquer erro, inconsistência ou necessidade de correção, solicita-se entrar em contato para retificação.")
+    st.markdown("### Uso e direitos")
+    st.markdown("Os documentos disponibilizados são de domínio público, por se tratarem de relatórios oficiais produzidos por instituições governamentais entre 1850 e 1930.")
+    st.markdown("As digitalizações foram obtidas a partir dos seguintes acervos públicos:")
+    st.markdown("- Relatórios Presidenciais 1850 - 1930: https://digitalcollections.crl.edu/search?ln=en&p=Provincial+Presidential+Reports+S%C3%A3o+Paulo&f=&action_search=Search&rm=&sf=&so=d&rg=25&c=CRL+Digital+Collections&of=hb&fti=1&fti=1")
+    st.markdown("- Relatórios de Agricultura: biblioteca digital SEADE 1880 - 1930: https://bibliotecadigital.seade.gov.br/")
+    st.markdown("Esta base realiza organização, indexação e processamento textual (incluindo OCR) sobre esses materiais.")
+    st.markdown("### Financiamento")
+    st.markdown("Pesquisa desenvolvida com apoio da Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP) processo n. 2022/16174-7 atrelada a pesquisa de Doutorado de Laura Pappalardo na Faculdade de Arquitetura e Urbanismo de São Paulo, orientada por Maria de Lourdes Zuquim.")
+    st.stop()
+
 st.markdown("## Buscar termos:\n- Relatórios Presidenciais da província de São Paulo (1850-1930)\n- Relatórios da Secretaria de Agricultura (1880-1930)")
 st.markdown("[baixar relatorios](https://drive.google.com/drive/folders/1UhyRxnprxZtQylzZJ0DW6L6XWwpt9LCg?usp=sharing)")
 
 STOPWORDS = set("""
 de da do das dos a o os as que e em para por com se ao na no nos nas elle segundo alguns nesta
 uma um umas uns este esta esse essa isso pelo pela entre sobre contra idem sera data 
-onde quando como qual quais mais menos ja ainda nao ser foi sao tem deste desde cada 
-lhe sua suas seu digital seu tambem muito pouco porem pois porque fazer quanto francisco 
-nao foi tem ser sua aos ate ao sem art nio seus todos desta tendo annos outros
+onde quando como qual quais mais menos ja ainda nao ser foi sao tem ser foi sao tem ser sua aos ate ao sem art nio seus todos desta tendo annos outros
 assim sido dia mas bem sao todas suas quaes alem vos lhe pelos grande maior mesma 
 con ella mez eee pois pro paulo sendo mesmo foram durante anno jose antonio geral 
 """.split())
@@ -422,17 +455,6 @@ if not df_para_graficos.empty:
         )
     else:
         st.info("Sem dados para o comparativo por coleção com os filtros atuais.")
-
-# ---------- PICOS ---------- #
-st.subheader("Picos detectados")
-
-if not serie.empty:
-    picos = (
-        serie.sort_values("ocorrencias", ascending=False)
-        .groupby("colecao")
-        .head(3)
-    )
-    st.dataframe(picos, width="stretch")
 
 # ---------- PICOS ---------- #
 st.subheader("Picos detectados")
