@@ -513,7 +513,7 @@ if st.button("Gerar ranking por década"):
     st.dataframe(tabela, width="stretch")
 
 
-st.subheader("Palavras mais frequentes (com stopwords removidas)")
+st.subheader("Palavras mais frequentes")
 
 stop = STOPWORDS
 
